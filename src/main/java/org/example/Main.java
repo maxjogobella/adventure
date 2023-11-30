@@ -10,6 +10,12 @@ public class Main {
         // clicks the close ("X" button)
         window.setResizable(false); // cannot resize this window
         window.setTitle("The philosopher's Journey"); // title of the game
+
+        GamePanel gamePanel = new GamePanel();
+        window.add(gamePanel); // add this GamePanel to ourWindow
+        // causes this window to be sized to fit the preferred size and layouts of its subcomponents
+        window.pack();
+
         window.setLocationRelativeTo(null); // will be displayed at the center of the screen
         window.setVisible(true);
     }

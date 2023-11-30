@@ -1,6 +1,7 @@
 package org.example;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GamePanel extends JPanel {
     /**
@@ -17,5 +18,9 @@ public class GamePanel extends JPanel {
     private final int screenWidth = tileSize * maxScreenCol; // 768 px
     private final int screenHeight = tileSize * maxScreenRow; // 576 px
 
-   
+    public GamePanel() {
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the panel size of GamePanel
+        this.setBackground(Color.BLACK); // set the background color of this GamePanel
+        this.setDoubleBuffered(true); // all the drawing will be done in offscreen painting buffer, can improve game's rendering performance
+    }
 }
