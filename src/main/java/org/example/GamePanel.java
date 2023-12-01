@@ -19,12 +19,20 @@ public class GamePanel extends JPanel implements Runnable {
     private final int screenWidth = tileSize * maxScreenCol; // 768 px
     private final int screenHeight = tileSize * maxScreenRow; // 576 px
 
-    Thread gameThread;
+    private KeyHandler keyH = new KeyHandler();
+    private Thread gameThread;
+
+    // Set player's default position
+    private int playerX = 100;
+    private int playerY = 100;
+    private int playerSpeed = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the panel size of GamePanel
         this.setBackground(Color.BLACK); // set the background color of this GamePanel
         this.setDoubleBuffered(true); // all the drawing will be done in offscreen painting buffer, can improve game's rendering performance
+        this.addKeyListener(keyH);
+        this.setFocusable(true); // -> this GamePanel can be "focused" to receive key input
     }
 
     public void startGameThread() {
@@ -37,22 +45,36 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (gameThread != null) {
 
-            update();
-            repaint();
+            update(); // update information such as character position
+            repaint(); // draw the screen with the updated information
+
         }
 
     }
 
-
-    // update information such as character position
     public void update() {
+
+        if (keyH.isUpPressed() == true) {
+            playerY -= playerSpeed;
+        } else if (keyH.isDownPressed() == true) {
+            playerY += playerSpeed;
+        } else if (keyH.isLeftPressed() == true) {
+            playerX -= playerSpeed;
+        } else if (keyH.isRightPressed() == true) {
+            playerX += playerSpeed;
+        }
 
     }
 
-    // draw the screen with the updated information
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.white);
+        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        g2.dispose();
 
     }
 }
